@@ -1,0 +1,16 @@
+{
+  "name": "intro-to-gatsby-webgeeks-2018",
+  "version": "1.0.0",
+  "description": "Intro to Gatsby Web Geeks presentation",
+  "main": "index.js",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start": "mdx-deck deck.mdx",
+    "build": "mdx-deck build deck.mdx",
+    "pdf": "mdx-deck pdf deck.mdx"
+  },
+  "devDependencies": {
+    "mdx-deck": "^1.5.15"
+  }
+}
