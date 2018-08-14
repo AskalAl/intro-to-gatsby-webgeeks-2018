@@ -379,9 +379,76 @@ return (
 <Image src='images/ui_step1.png' />
 
 ```notes
-Here it is! Not super great, but it's a start.
+- Here it is! Not super great, but it's a start.
+- Takeaways:
+- I discover that I hate writing inline CSS-in-JS
+- Also I am a horrible designer
 ```
 ---
+# Typography.js to the Rescue!
+
+```notes
+- In the Gatsby docs
+- It's a CSS reset + basic typography settings, including scales etc
+- Built for React/modules
+- Super fun themes
+```
+---
+```sh
+yarn add gatsby-plugin-typography typography-theme-fairy-gates
+```
+
+```notes
+- Even better, there's a plugin for Gatsby
+- I chose the fairy gates theme because it's bad-ass
+```
+---
+export default FullScreenCode
+
+```js
+  // src/utils/typography.js
+  import Typography from 'typography'
+  import fairyGatesTheme from 'typography-theme-fairy-gates'
+
+  const typography = new Typography(fairyGatesTheme)
+
+  export default typography
+```
+
+```notes
+- Here we start by defining a utils/typography.js file
+- Import the theme
+- And apply it
+```
+---
+export default FullScreenCode
+
+```diff
+{
+  plugins: [
++    {
++       resolve: 'gatsby-plugin-typography',
++       options: {
++         pathToConfigModule: 'src/utils/typography.js',
++       }
++    }
+  ]
+}
+```
+
+```notes
+- Then we tell Gatsby we wanna use it
+```
+---
+<Image src='images/ui_step2.png' />
+
+```notes
+- It's a little better
+- But we can still do better
+- And my CSS writing problems still exist
+```
+---
+- Introduction to CSS modules
 - Split into component
 - Build custom pages
 - Link to pages
