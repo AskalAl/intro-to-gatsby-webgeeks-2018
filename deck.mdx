@@ -124,10 +124,8 @@ export default Invert
 # But where's the data?
 
 ```js
-const wordPressData = await fetch('https://your.wordpress.sit/wp-json/wp/v2/posts')
-  .then(d => d.json())
-const stripeData = await fetch('https://api.stripe.com/transactions')
-  .then(d => d.json());
+await fetch('https://your.wordpress.sit/wp-json/wp/v2/posts')
+await fetch('https://api.stripe.com/transactions')
 // blah blah blah a million more times
 ```
 
