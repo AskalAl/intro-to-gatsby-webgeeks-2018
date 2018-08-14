@@ -438,7 +438,7 @@ export default FullScreenCode
 - Then we tell Gatsby we wanna use it
 ```
 ---
-<Image src='images/ui_step2.png' />
+![](images/ui_step2.png)
 
 ```notes
 - It's a little better
@@ -511,14 +511,112 @@ export default FullScreenCode
 - I feel like we have an opportunity to make the event block a component
 ```
 ---
-<Image src='images/ui_step2.png' />
+![](images/ui_step2.png)
 
 ```notes
 - And in the meantime, maybe find a better design
 ```
 ---
+export default FullScreenCode
 
-- Split into component
+```jsx
+<div className={props.className}>
+  <img
+    className={styles.thumbnail}
+    src={event.featured_media.source_url}
+    alt={event.title}
+  />
+  <div className={styles.meta}>
+    <h3 className={styles.title}>{event.title}</h3>
+    <p className={styles.date}>
+      {getDateObjectFromEvent(event).format('LLL')}
+    </p>
+  </div>
+</div>
+```
+
+```notes
+- Changed the markup a bit and wrote some styles
+```
+---
+export default FullScreenCode
+
+```jsx
+  // ...
+  import Event from '../components/event';
+
+  // ...
+  return (
+    <div>
+      <h2 className={styles.heading}>Upcoming Events</h2>
+
+      <div>
+        {upcoming.map(({ node }, index) => (
+          <Event className={styles.event} key={index} event={node} />
+        ))}
+      </div>
+    </div>
+  )
+```
+---
+<Image src='images/ui_step3.png' />
+
+```notes
+- This is looking slick
+- Except not all the events are coming up
+```
+---
+export default FullScreenCode
+
+```jsx
+function upcomingEvents(events) {
+  const today = moment().startOf('day')
+  return events
+    .filter(event => getDateObjectFromEvent(event.node).startOf('day') >= today)
+    .sort((a, b) => a.node.acf.event_date - b.node.acf.event_date)
+}
+
+function pastEvents(events) {
+  const today = moment().startOf('day')
+  return events.filter(
+    event => getDateObjectFromEvent(event.node).startOf('day') < today
+  )
+}
+```
+
+```notes
+- So I wrote a couple methods to split the array into two
+- One has upcoming, one has past
+- Uses the moment API
+- This could otherwise be done in the WP source transformation process or in the GraphQL query
+- But since date format in ACF is not correct, we opt to do it on the client side
+```
+---
+export default FullScreenCode
+
+```jsx
+const upcoming = upcomingEvents(data.allWordpressWpEvents.edges)
+const past = pastEvents(data.allWordpressWpEvents.edges)
+
+return (
+  <div>
+    {upcoming.length && (
+      <div>
+        <h2 className={styles.heading}>Upcoming Events</h2>
+
+        <div>
+          {upcoming.map(({ node }, index) => (
+            <Event className={styles.event} key={index} event={node} />
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+)
+```
+---
+<Image src='images/ui_step4.png' />
+---
 - Build custom pages
 - Link to pages
 ---
