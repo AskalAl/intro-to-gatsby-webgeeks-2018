@@ -1,4 +1,5 @@
 export { default as theme } from './theme'
+import { FullScreenCode } from 'mdx-deck/layouts'
 
 # Intro to Gatsby
 It's the future, y'all
@@ -26,8 +27,6 @@ gatsby new my-gatsby-project
 
 </div>
 ---
-import { FullScreenCode } from 'mdx-deck/layouts'
-
 export default FullScreenCode
 
 ```jsx
@@ -46,3 +45,22 @@ export default FullScreenCode
   export default IndexPage
 ```
 ---
+export default FullScreenCode
+
+```jsx
+  // src/pages/page-2.js
+
+  import React from 'react'
+  import Link from 'gatsby-link'
+
+  const SecondPage = () => (
+    <div>
+      <h1>Hi from the second page</h1>
+      <p>Welcome to page 2</p>
+      <Link to="/">Go back to the homepage</Link>
+    </div>
+  )
+
+  export default SecondPage
+
+```
