@@ -5,18 +5,17 @@ import { Appear, Image } from 'mdx-deck'
 # Intro to Gatsby
 It's the future, y'all
 ---
-# My notes
-- Why `import React`? It's dumb and weird.
-- As an experienced JS Dev, I struggled with knowing WTF was going on in some places.
-- Example: arrow functions with no curly braces, returning JSX.
-- When do I need to wrap with parens and when not?
-- Pretty adds semicolons in front of JSX tags sometimes which freaked me out
----
 # What is Gatsby?
 - Static site builder
 - Built using React components
 - Has many adapters (Markdown, WordPress, Stripe)
 - Leverages GraphQL for fetching data within components
+
+```notes
+- Bullets
+- $3.8M in seed funding
+- Have a hosted cloud version for $$$, similar to WP, Ghost model
+```
 ---
 # Installing Gatsby
 
@@ -184,6 +183,12 @@ type Project {
   contributors: [User]
 }
 ```
+
+```notes
+- Define the type with all possible fields
+- This allows GraphQL to be self-documenting
+- Tools can introspect which fields are available
+```
 ---
 ## Ask for what you want
 
@@ -193,6 +198,12 @@ type Project {
     tagline
   }
 }
+```
+
+```notes
+- I want the project
+- Named graphql
+- But I only need the tagline
 ```
 ---
 ## Get predictable results
@@ -205,7 +216,20 @@ type Project {
 }
 ```
 ---
+# GraphQL in Gatsby
+
+- Compiles all sources and pages into a GraphQL data source
+- Allows you to write queries in your components
+- Extracts queries at build time and inserts the data
+---
 <Image src='images/graphql_1.png' />
+
+```notes
+- Gatsby exposes a GraphQL UI out of the box
+- Note the query on the left. We're fetching all site pages
+- Asking for specific fields: id, path, jsonName
+- Docs are available + autocomplete!
+```
 ---
 - Let's build a Web Geeks site with Gatsby
 - Install the WordPress source plugin
@@ -216,3 +240,10 @@ type Project {
 - Split into component
 - Build custom pages
 - Link to pages
+---
+# My notes
+- Why `import React`? It's dumb and weird.
+- As an experienced JS Dev, I struggled with knowing WTF was going on in some places.
+- Example: arrow functions with no curly braces, returning JSX.
+- When do I need to wrap with parens and when not?
+- Pretty adds semicolons in front of JSX tags sometimes which freaked me out
