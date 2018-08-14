@@ -1,14 +1,49 @@
 export { future as theme } from 'mdx-deck/themes'
 
-# This is the title of my deck
+# Intro to Gatsby
+It's the future, y'all
 ---
-# About Me
-- My name is Josh
-- I like to code things sometimes.
+# My notes
+- Why `import React`? It's dumb and weird.
+- As an experienced JS Dev, I struggled with knowing WTF was going on in some places.
+- Example: arrow functions with no curly braces, returning JSX.
+- When do I need to wrap with parens and when not?
+- Pretty adds semicolons in front of JSX tags sometimes which freaked me out
 ---
-```jsx
-<CodeSnippet />
+# What is Gatsby?
+- Static site builder
+- Built using React components
+- Leverages GraphQL for fetching data within components
+---
+# Installing Gatsby
+
+<div style={{ fontSize: '1.5em' }}>
+
 ```
+yarn global add gatsby-cli
+gatsby new my-gatsby-project
+```
+
+</div>
 ---
+import { FullScreenCode } from 'mdx-deck/layouts'
+
+export default FullScreenCode
+
+```jsx
+import React from 'react'
+import Link from 'gatsby-link'
+
+const IndexPage = () => (
+  <div>
+    <h1>Hi people</h1>
+    <p>Welcome to your new Gatsby site.</p>
+    <p>Now go build something great.</p>
+    <Link to="/page-2/">Go to page 2</Link>
+  </div>
+)
+
+export default IndexPage
+```
+
 ---
-# The end
