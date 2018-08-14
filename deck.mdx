@@ -231,7 +231,60 @@ type Project {
 - Docs are available + autocomplete!
 ```
 ---
-- Let's build a Web Geeks site with Gatsby
+export default Invert
+
+# Let's build Web Geeks in Gatsby!
+---
+<Image src='images/wg_homepage.png' />
+
+```notes
+- Here it is
+- We list upcoming events
+- That's what we'll focus on
+```
+---
+## Step 1: WordPress Source Plugin
+
+<div style={{ fontSize: '1.5em' }}>
+
+```sh
+gatsby new webgeeks-gatsby
+cd webgeeks-gatsby
+yarn add gatsby-source-wordpress
+```
+
+```notes
+We start by creating a new Gatsby project and including the official WordPress source plugin
+```
+
+</div>
+---
+## Over in WordPress land...
+
+```diff
+// register_post_type()
+'public' => true,
++'show_in_rest' => true,
++'rest_base' => 'events',
+'has_archive' => true,
+```
+
+```sh
+wp plugin add --activate acf-to-rest-api
+```
+
+```notes
+- WP ships with a REST API by default now!
+- We had to do a little house keeping, though
+- First, include the custom post type 'events' in the API with a couple lines
+- Also renamed the prefix instead of wg_events
+- Installed the ACF plugin because we have important event data in ACF
+- That's it!
+```
+---
+## Step 2: Configure it
+
+---
 - Install the WordPress source plugin
 - Config
 - Demo the CLI pulling down the posts
