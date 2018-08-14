@@ -1,6 +1,6 @@
 export { default as theme } from './theme'
-import { FullScreenCode } from 'mdx-deck/layouts'
-import { Image } from 'mdx-deck'
+import { FullScreenCode, Invert } from 'mdx-deck/layouts'
+import { Appear, Image } from 'mdx-deck'
 
 # Intro to Gatsby
 It's the future, y'all
@@ -73,7 +73,7 @@ export default FullScreenCode
 
 - Customize
 - Build
-- Deploy to Netlify, S3/Cloudfront, GitHub/Gitlab Pages, Heroku, Now
+- Amazon S3, Netlify, GitHub Pages, Surge.sh, Aerobatic, Now.sh, & many more
 
 ```notes
 - Changes are hot-reloaded
@@ -91,13 +91,89 @@ export default FullScreenCode
 - Or Middleman for building more complex apps
 ```
 ---
+export default Invert
+
 # Here's what
+---
+# Modern Development
+
+```notes
+- Besides being built with React and Webpack...
+- PWA
+- Code and data splitting
+- Loads only critical HTML, CSS, and data
+- Prefetches important assets
+- You have to do none of this!
+```
 ---
 <Image src='https://pmcvariety.files.wordpress.com/2016/02/transformers-age-of-extinction.jpg' />
 ---
 # Transformers
+- Markdown
+- Images
+- JSON
+- YAML
+- CSV
+
+---
+# Source Plugins
+- WordPress
+- Netlify CMS
+- Vimeo, Trello, Craft, MongoDB, Stripe
+
+---
+# But where's the data?
+
+```js
+const wordPressData = await fetch('https://your.wordpress.sit/wp-json/wp/v2/posts')
+  .then(d => d.json())
+const stripeData = await fetch('https://api.stripe.com/transactions')
+  .then(d => d.json());
+// blah blah blah a million more times
+```
+
+```notes
+- So if you were building a project with Jekyll or a vanilla static site
+- Normally have to do this
+- Is this necessary for Gatsby?
+```
+---
+# Nope
+
+```notes
+- Transformers work behind the scenes on build
+- They move the data into a queryable format for the front-end components
+- That format is...
+```
 ---
 # GraphQL
-- Used in Gatsby
+- It's used in Gatsby
+- Gosh, it's a real treat
+
+```notes
+- How many of you have heard of it?
+- (reveal)
+- It's gonna blow your minds
+- Gatsby leverages this in some really cool ways to expose your data
+- How does GraphQL work?
+```
+---
+export default Invert
+
+# GraphQL, Explained
+---
+> GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data.
+---
+
 ---
 <Image src='images/graphql_1.png' />
+---
+- Let's build a Web Geeks site with Gatsby
+- Install the WordPress source plugin
+- Config
+- Demo the CLI pulling down the posts
+- Test using GraphQL queries
+- Update the UI
+- Split into component
+- Build custom pages
+- Link to pages
