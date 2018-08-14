@@ -243,23 +243,7 @@ export default Invert
 - That's what we'll focus on
 ```
 ---
-## Step 1: WordPress Source Plugin
-
-<div style={{ fontSize: '1.5em' }}>
-
-```sh
-gatsby new webgeeks-gatsby
-cd webgeeks-gatsby
-yarn add gatsby-source-wordpress
-```
-
-```notes
-We start by creating a new Gatsby project and including the official WordPress source plugin
-```
-
-</div>
----
-## Over in WordPress land...
+## Get the blog ready
 
 ```diff
 // register_post_type()
@@ -282,14 +266,122 @@ wp plugin add --activate acf-to-rest-api
 - That's it!
 ```
 ---
+## Step 1: WordPress Source Plugin
+
+<div style={{ fontSize: '1.5em' }}>
+
+```sh
+gatsby new webgeeks-gatsby
+cd webgeeks-gatsby
+yarn add gatsby-source-wordpress
+```
+
+```notes
+We start by creating a new Gatsby project and including the official WordPress source plugin
+```
+
+</div>
+---
 ## Step 2: Configure it
 
+```json
+{
+  plugins: [
+    {
+      resolve: 'gatsby-source-wordpress',
+      options: {
+        baseUrl: 'dsmwebgeeks.com',
+        protocol: 'http',
+        useACF: true
+      }
+    }
+  ]
+}
+```
 ---
-- Install the WordPress source plugin
-- Config
-- Demo the CLI pulling down the posts
-- Test using GraphQL queries
-- Update the UI
+<video src="images/gatsby_build.mp4" autoPlay loop muted />
+
+```notes
+- At build time, Gatsby fetches all posts, pages, events, etc from the WordPress API
+- Stores them locally
+- This can really be a slow process if you have a ton of data! We only have 42 events
+```
+---
+<Image src='images/gatsby_wp_graphql.png' />
+
+```notes
+- But now that all the WP data is part of Gatsby, we can use GraphQL to query everything in WordPress
+- This is super cool and powerful. You can't even do this in WordPress.
+```
+---
+## Step 3: Update the UI
+---
+<Image src='images/ui_initial.png' />
+
+```notes
+- With some minor color and content changes, we have the base for a new website
+- Isn't that sexy??
+```
+---
+export default FullScreenCode
+
+```jsx
+export const eventsQuery = graphql`
+  query eventsQuery {
+    allWordpressWpEvents {
+      edges {
+        node {
+          title
+          featured_media {
+            source_url
+          }
+          acf {
+            event_date
+            event_time
+          }
+        }
+      }
+    }
+  }
+`
+```
+
+```notes
+- We start by writing the query within pages/index.js
+- We want title, featured image, and date/time of event from ACF
+```
+---
+export default FullScreenCode
+
+```jsx
+return (
+  <div>
+    <h1>What events are coming up?</h1>
+
+    <div style={{ ... }}>
+      {data.allWordpressWpEvents.edges.map(({ node }, index) => (
+        <div key={index}>
+          <img src={node.featured_media.source_url} alt={node.title} />
+          <h3>{node.title}</h3>
+          <p>{node.acf.event_date}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+)
+```
+
+```notes
+- That data is automatically passed as a prop to the Gatsby page component
+- We use that data to display what we want
+```
+---
+<Image src='images/ui_step1.png' />
+
+```notes
+Here it is! Not super great, but it's a start.
+```
+---
 - Split into component
 - Build custom pages
 - Link to pages
