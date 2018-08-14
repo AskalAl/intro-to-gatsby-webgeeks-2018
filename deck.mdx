@@ -163,8 +163,47 @@ export default Invert
 # GraphQL, Explained
 ---
 > GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data.
----
 
+```notes
+- Like writing SQL, but to a JSON endpoint
+- Open-source, built by Facebook
+```
+---
+> Ask for what you need, get exactly that
+
+```notes
+- Most REST APIs return the entire record (or records), when all you really want is a title
+```
+---
+## Describe your data
+
+```graphql
+type Project {
+  name: String
+  tagline: String
+  contributors: [User]
+}
+```
+---
+## Ask for what you want
+
+```graphql
+{
+  project(name: "GraphQL") {
+    tagline
+  }
+}
+```
+---
+## Get predictable results
+
+```json
+{
+  "project": {
+    "tagline": "A query language for APIs"
+  }
+}
+```
 ---
 <Image src='images/graphql_1.png' />
 ---
