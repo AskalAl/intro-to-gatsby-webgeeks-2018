@@ -15,6 +15,9 @@ Deploys with [`now`](https://zeit.co/now)
 
 ```sh
 now
+
+# After deploy
+now alias
 ```
 
 ## PDF

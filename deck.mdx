@@ -617,12 +617,177 @@ return (
 ---
 <Image src='images/ui_step4.png' />
 ---
-- Build custom pages
-- Link to pages
+# Let's make some pages
 ---
-# My notes
-- Why `import React`? It's dumb and weird.
-- As an experienced JS Dev, I struggled with knowing WTF was going on in some places.
-- Example: arrow functions with no curly braces, returning JSX.
-- When do I need to wrap with parens and when not?
-- Pretty adds semicolons in front of JSX tags sometimes which freaked me out
+## The createPage API
+
+`gatsby-node.js`
+
+```js
+exports.createPages = ({ graphql, boundActionCreators }) => {
+  const { createPage } = boundActionCreators
+
+  // ...
+```
+
+```notes
+- Gatsby lets you hook into the build process
+- Hooking into the createPage API
+```
+---
+export default FullScreenCode
+
+```js
+return new Promise((resolve, reject) => {
+    graphql(
+      `
+        {
+          allWordpressWpEvents {
+            edges {
+              node {
+                id
+                slug
+                status
+              }
+            }
+          }
+        }
+      `
+    ).then(result => { ... })
+```
+
+```notes
+- We use GraphQL just like we would in components to fetch events
+- We only need slug, id, etc to create pages
+```
+---
+export default FullScreenCode
+
+```js
+if (result.errors) {
+  console.log(result.errors)
+  reject(result.errors)
+}
+const eventTemplate = path.resolve('./src/templates/event.js')
+result.data.allWordpressWpEvents.edges.forEach(edge => {
+  createPage({
+    path: `events/${edge.node.slug}/`,
+    component: slash(eventTemplate),
+    context: {
+      id: edge.node.id,
+    },
+  })
+})
+resolve()
+```
+
+```notes
+- We make our slug using the WP slug
+- We also reference a newly-created page template for events
+- Notice that we're passing the node ID in the context to the page
+```
+---
+`src/templates/event.js`
+
+```jsx
+export const eventQuery = graphql`
+  query EventQuery($id: String!) {
+    wordpressWpEvents(id: { eq: $id }) {
+      title
+      content
+      featured_media {
+        source_url
+      }
+    }
+  }
+`
+```
+
+```notes
+- Inside the page template, the query accepts an argument with a variable
+- Gatsby auto fills this with the params passed to the page from the last Step
+```
+---
+export default FullScreenCode
+
+```jsx
+return (
+  <div>
+    <h1>{data.wordpressWpEvents.title}</h1>
+    <img
+      src={
+        data.wordpressWpEvents.featured_media &&
+        data.wordpressWpEvents.featured_media.source_url
+      }
+      alt={data.wordpressWpEvents.title}
+    />
+    <div dangerouslySetInnerHTML={{ __html: data.wordpressWpEvents.content }} />
+    <Link to="/">All events</Link>
+  </div>
+)
+```
+
+```notes
+- We use the dangerous attribute since we want to render the actual WP content
+```
+---
+export default FullScreenCode
+
+```diff
++import Link from 'gatsby-link'
+// ...
+<div className={styles.meta}>
+-  <h3 className={styles.title}>{event.title}</h3>
++  <h3 className={styles.title}>
++    <Link to={`/events/${event.slug}`}>{event.title}</Link>
++  </h3>
+  <p className={styles.date}>
+    {getDateObjectFromEvent(event).format('LLL')}
+  </p>
+</div>
+```
+
+
+```notes
+- Finally we can link to each event by its slug from the index
+```
+---
+<Image src='images/ui_step5.png' />
+---
+<Image src='images/ui_step6.png' />
+---
+# It's alive
+
+https://dsmwebgeeks.now.sh
+
+```notes
+- This is up and running, hosted on Now
+- Was super easy to deploy
+- Probably not gonna replace the main site for now
+---
+## Source Code
+https://github.com/dsmwebgeeks/webgeeks-gatsby
+
+```notes
+- Check out the source code on the DSM Web Geeks github page
+```
+---
+# Conclusion
+
+- Super fun
+- Helps to be a React/JSX expert
+- Compile process still has potential
+
+
+```notes
+- Gatsby seems really powerful
+- Haven't even started exploring potential with Stripe, other CMS stuff
+- React import magic happening; helps to be expert
+- Still static site at end of day with a compile process
+- E.g. has to be redeployed for new events
+- But I'm guessing that will only improve with more tools
+```
+---
+# Thank you!
+
+Slides: https://intro-to-gatsby.now.sh
