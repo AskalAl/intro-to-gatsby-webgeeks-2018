@@ -448,7 +448,78 @@ export default FullScreenCode
 - And my CSS writing problems still exist
 ```
 ---
-- Introduction to CSS modules
+# CSS modules to the rescue!
+---
+>CSS Modules are highly recommended for those new to building with Gatsby (and React in general).
+
+```notes
+Gatsby works out of the box with CSS Modules.
+```
+---
+export default FullScreenCode
+
+```css
+/* src/pages/index.module.css */
+
+.heading {
+  margin-bottom: 1em;
+}
+
+.event {
+  margin-bottom: 2rem;
+  display: flex;
+}
+```
+
+```notes
+- create a file with the same name as your page
+- must include .module.css so Gatsby knows how to transform it behind the scenes
+```
+---
+export default FullScreenCode
+
+```jsx
+  import styles from './index.module.css'
+
+  return (
+    <div>
+      <h1 className={styles.heading}>What events are coming up?</h1>
+
+      <div>
+        {data.allWordpressWpEvents.edges.map(({ node }, index) => (
+          <div className={styles.event} key={index}>
+            <img src={node.featured_media.source_url} alt={node.title} />
+            <h3>{node.title}</h3>
+            <p>{node.acf.event_date}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+```
+
+```notes
+- import it like any other module
+- assign classnames like you would with css
+- the selectors are scoped with a hash, so you don't have to worry about global leakings
+- happier with css - now let's move to another foundational concept of Gatsby and FE frameworks in general
+```
+---
+# Components!
+
+```notes
+- In Gatsby, it's super easy to create components
+- It is React, after all
+- I feel like we have an opportunity to make the event block a component
+```
+---
+<Image src='images/ui_step2.png' />
+
+```notes
+- And in the meantime, maybe find a better design
+```
+---
+
 - Split into component
 - Build custom pages
 - Link to pages
